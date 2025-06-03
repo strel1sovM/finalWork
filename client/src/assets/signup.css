@@ -1,0 +1,71 @@
+@import url(default.css);
+
+#app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* добавлено: вертикальная колонка */
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    /* расстояние между формами */
+}
+
+form {
+    border-radius: 20px;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    h1 {
+        padding-bottom: 20px;
+    }
+}
+
+form input {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2%;
+}
+
+form .data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 10%;
+}
+
+/* 🔒 Класс для скрытия элемента */
+.hidden {
+    display: none !important;
+}
+
+#my-form2 {
+    border-radius: 20px;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    h1 {
+        padding-bottom: 20px;
+    }
+}
+
+#my-form2 input {
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2%;
+}
+
+#my-form2 .data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 10%;
+}

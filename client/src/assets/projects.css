@@ -1,0 +1,75 @@
+@import url(default.css);
+
+#app {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    background-color: #fff;
+    max-height: 100%;
+    
+}
+
+.title {
+    color: blueviolet;
+    margin: 0 0 10px;
+    font-size: 1.2em;
+}
+
+.participants {
+    color: aqua;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.section {
+    color: gold;
+    margin-bottom: 10px;
+    background: #222;
+    padding: 8px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.section h4 {
+    margin: 0 0 5px;
+    font-size: 1em;
+    color: #fff;
+}
+
+.section ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.section li {
+    color: #ddd;
+    font-size: 0.9em;
+}
+@media (max-width: 600px) {
+  .title {
+    font-size: 1em;
+  }
+
+  .participants {
+    font-size: 0.8em;
+  }
+
+  .section li {
+    font-size: 0.8em;
+  }
+}
