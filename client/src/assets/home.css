@@ -6,6 +6,10 @@
     gap: 12px;
 }
 
+#app {
+    height: 100vh;
+}
+
 .container {
     display: flex;
     height: 100vh;
@@ -14,7 +18,10 @@
 .content {
     flex-grow: 1;
     padding: 24px;
-    position: relative;
+    /* position: relative; убрали */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .projects-header {
@@ -40,6 +47,57 @@
     cursor: pointer;
 }
 
+#invite-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* position: fixed; убрали */
+    /* Для имитации центрирования можно использовать margin: auto и flex-контейнер родитель */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#invite-form label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    /* position: relative; убрали */
+}
+
+/* Удаляем псевдоэлемент с position fixed, так как position нельзя */
+/* Если нужно окно с текстом — нужно показывать отдельный блок, например modal */
+/* Поэтому убираем #invite-form label:after */
+
+#invite-form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #4dabf7;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+#invite-form label:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+#invite-form input[type="checkbox"]:checked+label {
+    background: #f0f7ff;
+    border-left: 3px solid #4dabf7;
+}
+
 .participant {
     cursor: pointer;
     display: flex;
@@ -60,19 +118,44 @@
     color: white;
 }
 
-.create-button {
-    margin-left: auto;
+.create-button,
+.invite-button,
+.sendBtn {
     padding: 8px 16px;
     border: 2px solid #000;
     background: transparent;
     cursor: pointer;
     font-weight: bold;
     border-radius: 6px;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.2s ease;
+}
+
+.create-button {
+    margin-left: auto;
+}
+
+.create-button:hover,
+.invite-button:hover,
+.sendBtn:hover {
+    background-color: #4a90e2;
+    color: white;
+    border-color: #4a90e2;
+    transform: translateY(-2px);
+}
+
+.create-button:active,
+.invite-button:active,
+.sendBtn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form#my-form {
-    max-width: 600px;
-    margin-top: 24px;
+    width: 70%;
+
     padding: 24px;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -80,7 +163,7 @@ form#my-form {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    position: relative;
+    margin: 0 auto;
 }
 
 form#my-form h1 {
@@ -92,10 +175,21 @@ form#my-form input,
 form#my-form select,
 form#my-form button {
     padding: 10px;
-
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease,
+        transform 0.2s ease;
+}
+
+form#my-form input:focus,
+form#my-form select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    outline: none;
 }
 
 form#my-form label {
@@ -103,7 +197,7 @@ form#my-form label {
     margin-top: 12px;
 }
 
-/* Новый улучшенный список участников */
+/* Улучшенный список участников */
 #participants-list {
     display: flex;
     flex-direction: column;
@@ -124,61 +218,162 @@ form#my-form label {
     font-size: 14px;
 }
 
+/* Кнопка закрытия формы теперь будет внутри flex контейнера сверху справа, без position */
 .close-form-button {
-    position: absolute;
-    top: 16px;
-    right: 16px;
     background: none;
     border: none;
     font-size: 24px;
     font-weight: bold;
     color: #333;
     cursor: pointer;
-    z-index: 10;
+    transition: color 0.2s ease;
+
+    /* Используем flex контейнер, чтобы выровнять кнопку справа */
+    align-self: flex-end;
+    margin-bottom: 8px;
 }
 
-.close-form-button:hover {
-    color: #000;
+
+
+/* Для .invite-list заменяем position: absolute на флекс, чтобы растянуть по родителю */
+.invite-list {
+    background: white;
+
+    z-index: 1000;
+
+    animation: fadeIn 0.3s ease-out;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    /* Вместо inset:0 — используем flex:1 для растяжения */
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
 }
 
-.invite-button {
-
+/* Кнопка закрытия в invite-list */
+.invite-close-button {
     padding: 8px 16px;
     border: 2px solid #000;
     background: transparent;
     cursor: pointer;
     font-weight: bold;
     border-radius: 6px;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.2s ease;
+    transition: color 0.2s ease;
+
+    /* Выровняем по правому краю с помощью flex */
+
 }
 
-.invite-list {
-  position: absolute;
-  top: 80px;
-  right: 20px;
-  background: white;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 1000;
+.invite-close-button:hover {
+    background-color: #4a90e2;
+    color: white;
+    border-color: #4a90e2;
+    transform: translateY(-2px);
 }
 
-.invite-close-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 16px;
-  cursor: pointer;
+/* Анимация появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.sendBtn {
-    padding: 8px;
-    border: 2px solid #000;
-    background: transparent;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 6px;
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        border-right: none;
+        border-bottom: 2px solid;
+        padding: 12px;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .projects-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .plus-button {
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    form#my-form {
+        padding: 16px;
+        /* margin: 0 auto; */
+        border-radius: 12px;
+    }
+
+    .create-button,
+    .invite-button,
+    .sendBtn {
+        width: 100%;
+        text-align: center;
+    }
+
+    #participants-list {
+        max-height: 150px;
+        font-size: 13px;
+    }
+
+    /* Адаптивная стилизация invite-list */
+    .invite-list {
+
+        width: 100%;
+        height: auto;
+        max-height: none;
+        flex: none;
+        border-radius: 0;
+        box-shadow: none;
+        animation: none;
+        gap: 12px;
+    }
+
+    /* Кнопка закрытия в invite-list */
+    .invite-close-button {
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #invite-form {
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .close-form-button {
+        font-size: 20px;
+        margin-bottom: 12px;
+        align-self: flex-end;
+    }
+
+    .title {
+        font-size: 20px;
+    }
 }

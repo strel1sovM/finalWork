@@ -197,18 +197,8 @@ async function showInviteList() {
     if (existing) existing.remove();
 
     const inviteBox = document.createElement('div');
-
     inviteBox.id = 'invite-list';
-    inviteBox.style.position = 'absolute';
-    inviteBox.style.top = '80px';
-    inviteBox.style.right = '20px';
-    inviteBox.style.background = 'white';
-    inviteBox.style.padding = '1rem';
-    inviteBox.style.border = '1px solid #ccc';
-    inviteBox.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-    inviteBox.style.maxHeight = '300px';
-    inviteBox.style.overflowY = 'auto';
-    inviteBox.style.zIndex = '1000';
+    inviteBox.classList.add('invite-list');
 
     const form = document.createElement('form');
     form.id = 'invite-form';
@@ -245,26 +235,19 @@ async function showInviteList() {
             return;
         }
 
-        // ✅ Просто сохраняем выбранные ID в глобальный массив
         invitedUserIds = selectedIds;
 
         useToast('success', 'Участники добавлены');
         inviteBox.remove();
     };
 
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = '×';
-    closeBtn.style.position = 'absolute';
-    closeBtn.style.top = '5px';
-    closeBtn.style.right = '10px';
-    closeBtn.style.border = 'none';
-    closeBtn.style.background = 'transparent';
-    closeBtn.style.fontSize = '16px';
-    closeBtn.style.cursor = 'pointer';
+            const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'close';
+    closeBtn.classList.add('invite-close-button');
     closeBtn.addEventListener('click', () => inviteBox.remove());
 
-    inviteBox.appendChild(closeBtn);
-    inviteBox.appendChild(form);
+   form.appendChild(closeBtn);
+inviteBox.appendChild(form);
     document.querySelector('.content').appendChild(inviteBox);
 }
 
