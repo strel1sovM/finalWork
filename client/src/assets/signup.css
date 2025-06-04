@@ -145,3 +145,51 @@
         }
     }
 }
+
+@media (max-width: 756px) {
+  #my-form,
+  #my-form2 {
+    padding: 1rem;
+    border-radius: 12px;
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    .data input {
+      font-size: 0.95rem;
+      padding: 0.6rem 0.9rem;
+    }
+
+    button {
+      font-size: 0.95rem;
+      padding: 0.6rem 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  #my-form,
+  #my-form2 {
+    padding: 0.75rem;
+
+    h1 {
+      font-size: 1.2rem;
+    }
+
+    .data {
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .data input {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+    }
+
+    button {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
