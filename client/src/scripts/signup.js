@@ -4,6 +4,8 @@ import { useToast } from '../utils/hooks';
 import { useUser } from '../utils/useUser';
 import axios from 'axios';
 
+function signup() {
+    
 
 const form = document.forms.signup;
 const app = document.querySelector('#app');
@@ -135,3 +137,5 @@ function showAddImageForm() {
         }
     });
 }
+}
+signup()

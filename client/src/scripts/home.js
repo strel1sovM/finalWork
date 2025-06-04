@@ -48,27 +48,27 @@ function createProjectForm() {
     form.style.position = 'relative';
 
     form.innerHTML = `
-        <button type="button" class="close-form-button">&times;</button>
-        <h1>create project</h1>
-        <input type="text" name="project_name" id="project_name" placeholder="project name" required>
-        <input type="text" name="project_display_name" id="project__display_name" placeholder="project displayname" required>
-        
-        <label for="participants">participants:</label>
-        <div id="participants-list"></div>
+            <button type="button" class="close-form-button">&times;</button>
+            <h1>create project</h1>
+            <input type="text" name="project_name" id="project_name" placeholder="project name" required>
+            <input type="text" name="project_display_name" id="project__display_name" placeholder="project displayname" required>
+            
+            <label for="participants">participants:</label>
+            <div id="participants-list"></div>
 
-        <input type="text" name="section_name" id="section_name" placeholder="section name" required>
-        <input type="text" name="task_name" id="task_name" placeholder="task name" required>
-        <input type="text" name="task_title" id="task_title" placeholder="task title" required>
+            <input type="text" name="section_name" id="section_name" placeholder="section name" required>
+            <input type="text" name="task_name" id="task_name" placeholder="task name" required>
+            <input type="text" name="task_title" id="task_title" placeholder="task title" required>
 
-        <label for="priority">priority:</label>
-        <select id="priority" name="priority">
-            <option value="low">low</option>
-            <option value="medium">medium</option>
-            <option value="hight">hard</option>
-        </select>
+            <label for="priority">priority:</label>
+            <select id="priority" name="priority">
+                <option value="low">low</option>
+                <option value="medium">medium</option>
+                <option value="hight">hard</option>
+            </select>
 
-        <button class="create_section" type="submit">создать</button>
-    `;
+            <button class="create_section" type="submit">создать</button>
+        `;
 
     form.querySelector('.close-form-button').addEventListener('click', () => {
         form.remove();
@@ -111,12 +111,14 @@ function createProjectsHeader() {
     header.appendChild(title);
     header.appendChild(createButton);
     header.appendChild(inviteButton);
+    console.log(header);
 
     return header;
 }
 
 function buildLayout() {
     const app = document.querySelector('#app');
+
     const container = document.createElement('div');
     container.classList.add('container');
 
@@ -131,7 +133,9 @@ function buildLayout() {
 
     container.appendChild(sidebar);
     container.appendChild(main);
-    app.appendChild(container);
+    app.innerHTML = ''
+    app.append(container);
+    console.log(app);
 
     const addButton = sidebar.querySelector('.participant_add');
     addButton.addEventListener('click', async () => {
@@ -158,9 +162,15 @@ async function loadParticipants() {
 
         users.forEach(user => {
             const id = String(user._id).trim();
-            if (!uniqueUsersMap.has(id)) uniqueUsersMap.set(id, user);
-        });
+            const name = user.displayName || user.username || user.email || 'Unknown';
 
+            if (!Array.from(uniqueUsersMap.values()).some(u => {
+                const n = u.displayName || u.username || u.email || 'Unknown';
+                return n === name;
+            })) {
+                uniqueUsersMap.set(id, user);
+            }
+        });
         allUsers = Array.from(uniqueUsersMap.values());
 
         const participantsList = document.getElementById('participants-list');
@@ -241,13 +251,13 @@ async function showInviteList() {
         inviteBox.remove();
     };
 
-            const closeBtn = document.createElement('button');
+    const closeBtn = document.createElement('button');
     closeBtn.textContent = 'close';
     closeBtn.classList.add('invite-close-button');
     closeBtn.addEventListener('click', () => inviteBox.remove());
 
-   form.appendChild(closeBtn);
-inviteBox.appendChild(form);
+    form.appendChild(closeBtn);
+    inviteBox.appendChild(form);
     document.querySelector('.content').appendChild(inviteBox);
 }
 
@@ -306,7 +316,7 @@ function setupFormHandler() {
                         {
                             title: taskTitle,
                             name: taskName
-                            // Можно добавить приоритет, если нужен
+
                         }
                     ]
                 }
@@ -331,6 +341,7 @@ function setupFormHandler() {
 
 
 try {
+
     buildLayout();
 } catch (error) {
     console.error('Ошибка при загрузке:', error);
