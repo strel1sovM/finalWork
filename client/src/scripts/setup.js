@@ -37,6 +37,7 @@ export function loadALL(params) {
         ...user,
         strategy: 'local'
       });
+      
 
       cookie.setCookie('accessToken', response.data.accessToken, 1);
       useToast('success', 'Вы успешно вошли!');
