@@ -327,10 +327,10 @@ function setupFormHandler() {
             const sidebar = document.querySelector('.sidebar');
             const addButton = sidebar.querySelector('.participant_add');
 
-            if (sidebar && addButton && displayName) {
+            if (sidebar && addButton && projectDisplayName) {
                 const shortcut = document.createElement('div');
                 shortcut.classList.add('project-shortcut');
-                shortcut.textContent = displayName.charAt(0).toUpperCase();
+                shortcut.textContent = projectDisplayName.charAt(0).toUpperCase();
                 sidebar.insertBefore(shortcut, addButton); 
             }
 
