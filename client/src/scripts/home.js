@@ -1,4 +1,4 @@
-// Импорты
+
 import '../assets/default.css';
 import '../assets/home.css';
 
@@ -316,7 +316,7 @@ function setupFormHandler() {
 
         const token = cookie.getCookie('accessToken');
         try {
-            overlay.classList.remove('hidden'); // показать загрузку
+            overlay.classList.remove('hidden'); 
 
             const response = await axios.post(import.meta.env.VITE_API_URL + '/projects', project, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -327,11 +327,11 @@ function setupFormHandler() {
             const sidebar = document.querySelector('.sidebar');
             const addButton = sidebar.querySelector('.participant_add');
 
-            if (sidebar && addButton && projectName) {
+            if (sidebar && addButton && displayName) {
                 const shortcut = document.createElement('div');
                 shortcut.classList.add('project-shortcut');
-                shortcut.textContent = projectName.charAt(0).toUpperCase();
-                sidebar.insertBefore(shortcut, addButton); // вставляем над кнопкой
+                shortcut.textContent = displayName.charAt(0).toUpperCase();
+                sidebar.insertBefore(shortcut, addButton); 
             }
 
             form.remove();
@@ -340,7 +340,7 @@ function setupFormHandler() {
             console.error('Ошибка при создании проекта:', error.response?.data || error.message);
             useToast('error', 'Ошибка при создании проекта: ' + (error.response?.data?.message || error.message));
         } finally {
-            overlay.classList.add('hidden'); // скрыть загрузку
+            overlay.classList.add('hidden'); 
         }
     };
 }
