@@ -18,7 +18,6 @@
 .content {
     flex-grow: 1;
     padding: 24px;
-    /* position: relative; убрали */
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -57,8 +56,6 @@
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    /* position: fixed; убрали */
-    /* Для имитации центрирования можно использовать margin: auto и flex-контейнер родитель */
     margin-left: auto;
     margin-right: auto;
 }
@@ -72,12 +69,8 @@
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
-    /* position: relative; убрали */
 }
 
-/* Удаляем псевдоэлемент с position fixed, так как position нельзя */
-/* Если нужно окно с текстом — нужно показывать отдельный блок, например modal */
-/* Поэтому убираем #invite-form label:after */
 
 #invite-form input[type="checkbox"] {
     width: 18px;
@@ -197,7 +190,6 @@ form#my-form label {
     margin-top: 12px;
 }
 
-/* Улучшенный список участников */
 #participants-list {
     display: flex;
     flex-direction: column;
@@ -218,7 +210,6 @@ form#my-form label {
     font-size: 14px;
 }
 
-/* Кнопка закрытия формы теперь будет внутри flex контейнера сверху справа, без position */
 .close-form-button {
     background: none;
     border: none;
@@ -228,14 +219,12 @@ form#my-form label {
     cursor: pointer;
     transition: color 0.2s ease;
 
-    /* Используем flex контейнер, чтобы выровнять кнопку справа */
     align-self: flex-end;
     margin-bottom: 8px;
 }
 
 
 
-/* Для .invite-list заменяем position: absolute на флекс, чтобы растянуть по родителю */
 .invite-list {
     background: white;
 
@@ -247,7 +236,6 @@ form#my-form label {
     flex-direction: column;
     gap: 8px;
 
-    /* Вместо inset:0 — используем flex:1 для растяжения */
     flex: 1 1 auto;
     width: 100%;
     height: 100%;
@@ -268,7 +256,7 @@ form#my-form label {
         transform 0.2s ease;
     transition: color 0.2s ease;
 
-    /* Выровняем по правому краю с помощью flex */
+
 
 }
 
@@ -279,7 +267,7 @@ form#my-form label {
     transform: translateY(-2px);
 }
 
-/* Анимация появления */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -324,7 +312,7 @@ form#my-form label {
 
     form#my-form {
         padding: 16px;
-        /* margin: 0 auto; */
+
         border-radius: 12px;
     }
 
@@ -340,7 +328,6 @@ form#my-form label {
         font-size: 13px;
     }
 
-    /* Адаптивная стилизация invite-list */
     .invite-list {
 
         width: 100%;
@@ -353,7 +340,7 @@ form#my-form label {
         gap: 12px;
     }
 
-    /* Кнопка закрытия в invite-list */
+
     .invite-close-button {
         width: 100%;
         text-align: center;
@@ -376,4 +363,15 @@ form#my-form label {
     .title {
         font-size: 20px;
     }
+}
+
+.project-shortcut {
+    justify-content: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 10px;
+    background: #000;
+    color: white;
 }

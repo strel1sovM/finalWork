@@ -2,16 +2,13 @@
 import '../assets/default.css';
 import '../assets/home.css';
 
-
-
 import axios from 'axios';
 import { cookie } from '../utils/cookie';
 import { useToast } from '../utils/hooks';
 
-
 const overlay = document.querySelector('#loading-overlay');
 overlay.classList.add('hidden');
-let invitedUserIds = []
+let invitedUserIds = [];
 let allUsers = [];
 
 function createParticipantElement(name) {
@@ -48,27 +45,27 @@ function createProjectForm() {
     form.style.position = 'relative';
 
     form.innerHTML = `
-            <button type="button" class="close-form-button">&times;</button>
-            <h1>create project</h1>
-            <input type="text" name="project_name" id="project_name" placeholder="project name" required>
-            <input type="text" name="project_display_name" id="project__display_name" placeholder="project displayname" required>
-            
-            <label for="participants">participants:</label>
-            <div id="participants-list"></div>
+        <button type="button" class="close-form-button">&times;</button>
+        <h1>create project</h1>
+        <input type="text" name="project_name" id="project_name" placeholder="project name" required>
+        <input type="text" name="project_display_name" id="project__display_name" placeholder="project displayname" required>
+        
+        <label for="participants">participants:</label>
+        <div id="participants-list"></div>
 
-            <input type="text" name="section_name" id="section_name" placeholder="section name" required>
-            <input type="text" name="task_name" id="task_name" placeholder="task name" required>
-            <input type="text" name="task_title" id="task_title" placeholder="task title" required>
+        <input type="text" name="section_name" id="section_name" placeholder="section name" required>
+        <input type="text" name="task_name" id="task_name" placeholder="task name" required>
+        <input type="text" name="task_title" id="task_title" placeholder="task title" required>
 
-            <label for="priority">priority:</label>
-            <select id="priority" name="priority">
-                <option value="low">low</option>
-                <option value="medium">medium</option>
-                <option value="hight">hard</option>
-            </select>
+        <label for="priority">priority:</label>
+        <select id="priority" name="priority">
+            <option value="low">low</option>
+            <option value="medium">medium</option>
+            <option value="hight">hard</option>
+        </select>
 
-            <button class="create_section" type="submit">создать</button>
-        `;
+        <button class="create_section" type="submit">создать</button>
+    `;
 
     form.querySelector('.close-form-button').addEventListener('click', () => {
         form.remove();
@@ -111,7 +108,6 @@ function createProjectsHeader() {
     header.appendChild(title);
     header.appendChild(createButton);
     header.appendChild(inviteButton);
-    console.log(header);
 
     return header;
 }
@@ -133,9 +129,8 @@ function buildLayout() {
 
     container.appendChild(sidebar);
     container.appendChild(main);
-    app.innerHTML = ''
+    app.innerHTML = '';
     app.append(container);
-    console.log(app);
 
     const addButton = sidebar.querySelector('.participant_add');
     addButton.addEventListener('click', async () => {
@@ -261,7 +256,6 @@ async function showInviteList() {
     document.querySelector('.content').appendChild(inviteBox);
 }
 
-
 function setupFormHandler() {
     const form = document.getElementById('my-form');
     form.onsubmit = async (e) => {
@@ -280,7 +274,6 @@ function setupFormHandler() {
             return;
         }
 
-        // Собираем id участников из чекбоксов и приглашённых отдельно
         const selectedIds = new Set([
             ...formData.getAll('participants'),
             ...invitedUserIds
@@ -291,7 +284,6 @@ function setupFormHandler() {
             return;
         }
 
-        // Фильтруем участников по выбранным id из allUsers и формируем структуру для отправки
         const participants = allUsers
             .filter(user => selectedIds.has(String(user._id)))
             .map(user => ({
@@ -316,7 +308,6 @@ function setupFormHandler() {
                         {
                             title: taskTitle,
                             name: taskName
-
                         }
                     ]
                 }
@@ -325,23 +316,36 @@ function setupFormHandler() {
 
         const token = cookie.getCookie('accessToken');
         try {
+            overlay.classList.remove('hidden'); // показать загрузку
+
             const response = await axios.post(import.meta.env.VITE_API_URL + '/projects', project, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
             useToast('success', 'Проект успешно создан!');
+
+            const sidebar = document.querySelector('.sidebar');
+            const addButton = sidebar.querySelector('.participant_add');
+
+            if (sidebar && addButton && projectName) {
+                const shortcut = document.createElement('div');
+                shortcut.classList.add('project-shortcut');
+                shortcut.textContent = projectName.charAt(0).toUpperCase();
+                sidebar.insertBefore(shortcut, addButton); // вставляем над кнопкой
+            }
+
             form.remove();
             console.log('Ответ сервера:', response.data);
         } catch (error) {
             console.error('Ошибка при создании проекта:', error.response?.data || error.message);
             useToast('error', 'Ошибка при создании проекта: ' + (error.response?.data?.message || error.message));
+        } finally {
+            overlay.classList.add('hidden'); // скрыть загрузку
         }
     };
 }
 
-
 try {
-
     buildLayout();
 } catch (error) {
     console.error('Ошибка при загрузке:', error);
